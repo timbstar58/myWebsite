@@ -5,11 +5,14 @@ const passport = require('passport');
 
 router.post('/signup', (req, res, next) => {
 	// get username and password
-	const { username, password } = req.body;
+	const { username, password, password2 } = req.body;
+
+	console.log(password, 'is this pw1?');
+	console.log(password2, 'is this pw2?');
 	// is the password at least 8 chars
-	if (password.length < 8) {
+	if (password.length < 8 || password !== password2) {
 		// if not we show the signup form again with a message
-		return res.status(400).json({ message: 'Your password has to be 8 chars min' });
+		return res.status(400).json({ message: 'Your password has to be 8 chars min or passwords are not the same' });
 	}
 	if (username === '') {
 		return res.status(400).json({ message: 'Your username cannot be empty' });
